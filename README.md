@@ -3,10 +3,11 @@
 
 ## 项目浏览
 #### 用户拒绝授权位置信息,调用微信开发接口,弹出授权设置页面,设置后更新位置与天气,支持下拉刷新，横向滑动列表
-![gif](https://github.com/doraeige/Weather-applet/blob/master/images/arrow.png/01.gif)
+![gif](https://github.com/doraeige/Weather-applet/blob/master/images/01.gif)
+
 
 #### 用户同意授权位置信息，更新位置信息与天气
-![gif](https://github.com/doraeige/Weather-applet/blob/master/images/arrow.png/02.gif)
+![gif](https://github.com/doraeige/Weather-applet/blob/master/images/02.gif)
 
 ## 项目思路
 - 构建基本页面视图，展示天气信息
