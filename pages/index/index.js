@@ -19,7 +19,6 @@ const weatherColorMap = {
 
 // 创建 QQMapWX 对象,引入SDK核心类
 const QQMapWX = require('../../libs/qqmap-wx-jssdk.js')
-// let qqmapsdk
 
 // 设定状态变量 分别表示 未弹窗(默认)，弹窗拒绝，弹窗同意
 const UNPROMPTED = 0
@@ -40,32 +39,35 @@ Page({
     todayDate: '',
     todayTemp: '',
     city: '广州市',
-    locationTipsText: UNPROMPTED_TIPS,
     locationAuthType: UNPROMPTED
   },
 
   // 小程序刚刚启动时，会调用启动页面的 onLoad() 函数
-  // 实例化API核心类
+  // onLoad 中所有动态变量都会被初始化
   onLoad() {
+    // 实例化API核心类
     this.qqmapsdk = new QQMapWX({
       key: 'SB3BZ-UBU23-7Y53W-YAUUC-7HXWO-XRBRW'
     })
 
-    this.getNow()
+    // this.getNow()
 
     // 在回调函数的参数中可以看到用户是否已经打开或关闭某个权限
     // 使用 wx.getSetting 的回调函数获取设置信息
     wx.getSetting({
       success: res => {
-        // console.log(res)
         let auth = res.authSetting["scope.userLocation"]
+        // 是否授权位置信息
         if(auth){
           this.getCityAndWeather()
+        } else {
+          this.getNow() //使用默认城市广州
         }
+      },
+      fail: () => {
+        this.getNow() //使用默认城市广州
       }
-    })
-
-    
+    })  
   },
 
   // 页面下拉刷新
@@ -162,8 +164,7 @@ Page({
       type: 'gcj02',
       success: (res) => {
         this.setData({
-          locationAuthType: AUTHORIZED,
-          locationTipsText: AUTHORIZED_TIPS
+          locationAuthType: AUTHORIZED
         })
         // console.log(res.latitude, res.longitude)
         this.qqmapsdk.reverseGeocoder({
@@ -186,8 +187,7 @@ Page({
       // 如果拒绝使用位置服务，locationTipsText 将显示'点击开启位置权限',再次点击 location-wrapper 不再出现弹窗，所以函数开头加个判断
       fail: () => {
         this.setData({
-          locationAuthType: UNAUTHORIZED,
-          locationTipsText: UNAUTHORIZED_TIPS
+          locationAuthType: UNAUTHORIZED
         })
       }
     })
