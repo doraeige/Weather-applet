@@ -7,6 +7,7 @@ const weatherMap = {
   'heavyrain': '大雨',
   'snow': '雪'
 }
+
 // 建立一个对应将英文转化为对应的颜色
 const weatherColorMap = {
   'sunny': '#cbeefd',
@@ -20,7 +21,7 @@ const weatherColorMap = {
 // 创建 QQMapWX 对象,引入SDK核心类
 const QQMapWX = require('../../libs/qqmap-wx-jssdk.js')
 
-// 设定状态变量 分别表示 未弹窗(默认)，弹窗拒绝，弹窗同意
+// 设定状态变量 分别表示未弹窗(默认)，弹窗拒绝，弹窗同意
 const UNPROMPTED = 0
 const UNAUTHORIZED = 1
 const AUTHORIZED = 2
@@ -42,20 +43,19 @@ Page({
   onLoad() {
     // 实例化API核心类
     this.qqmapsdk = new QQMapWX({
-      key: 'SB3BZ-UBU23-7Y53W-YAUUC-7HXWO-XRBRW'
+    // 添加自己的key
+      key: '' 
     })
 
-    // this.getNow()
-
-    // 在回调函数的参数中可以看到用户是否已经打开或关闭某个权限
+    // 在回调函数的参数中可以获知用户是否已经打开或关闭某个权限
     // 使用 wx.getSetting 的回调函数获取设置信息
     wx.getSetting({
       success: res => {
         let auth = res.authSetting["scope.userLocation"]
-        // this.setData({
-        //   locationAuthType: auth ? AUTHORIZED
-        //     : (auth === false) ? UNAUTHORIZED : UNPROMPTED
-        // })
+        this.setData({
+          locationAuthType: auth ? AUTHORIZED
+            : (auth === false) ? UNAUTHORIZED : UNPROMPTED
+        })
         // 是否授权位置信息
         if (auth) {
           this.getCityAndWeather()
@@ -77,7 +77,7 @@ Page({
   },
 
   // 系统启动时，并不应该执行 wx.stopPullDownRefresh()，也不知道在没有下拉刷新时，这个函数会产生什么副作用
-  // 因此给 getNow() 添加 回调函数callback 参数，在wx.request 的 complete 的回调函数中，执行参数函数。
+  // 因此给 getNow() 添加 回调函数callback 参数，在 wx.request 的 complete 的回调函数中，执行参数函数。
   getNow(callback) {
     wx.request({
       url: 'https://test-miniprogram.com/api/weather/now',
@@ -157,9 +157,6 @@ Page({
   // 点击位置时的响应函数
   onTapLocation() { 
     this.getCityAndWeather()
-    wx.setBackgroundColor({
-      backgroundColorTop: '#000'
-    })
   },
 
   //调用 微信小程序JavaScript SDK reverseGeocoder 逆地址解析接口
