@@ -1,0 +1,137 @@
+.weather-wrapper {
+  padding-top: 20rpx;
+  padding-bottom: 250rpx;
+  position: relative;
+}
+
+.location-wrapper {
+  margin-bottom: 60rpx;
+  font-size: 30rpx;
+  line-height: 42rpx;
+  color: rgba(0, 0, 0, 0.6) !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.location-icon {
+  width: 21rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.location-text {
+  opacity: 0.5;
+  height: 42rpx;
+}
+
+.location-tips {
+  margin-top: 10rpx;
+  text-align: center;
+  opacity: 0.5;
+  height: 42rpx;
+}
+
+.temp {
+  text-align: center;
+  font-size: 200rpx;
+  line-height: 280rpx;
+  opacity: 0.8;
+}
+
+.weather {
+  text-align: center;
+  font-size: 40rpx;
+  line-height: 56rpx;
+  opacity: 0.65rpx;
+}
+
+.weather-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.day-weather {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 40rpx;
+  right: 40rpx;
+  height: 90rpx;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 30rpx;
+  line-height: 42rpx;
+  opacity: 0.5;
+}
+.temp-text {
+  flex-grow: 1;
+  padding-right: 30rpx;
+  text-align: right;
+}
+.arrow-icon {
+  width: 13rpx;
+  height: 24rpx;
+}
+
+.timetips {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-bottom: 45rpx;
+}
+
+.timetips-icon {
+  margin-right: 10rpx;
+  width: 36rpx;
+  height: 28rpx;
+}
+
+.timetips-text {
+  font-size: 30rpx;
+  line-height: 42rpx;
+  opacity: 0.5;
+}
+
+.weather-list {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.weather-item {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 120rpx;
+  /* font-size: 36rpx;
+  line-height: 42rpx; */
+  align-items: center;
+}
+
+.weather-time {
+  font-size: 30rpx;
+  line-height: 42rpx;
+}
+
+.weather-icon {
+  margin-top: 50rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.weather-temp {
+  margin-top: 46rpx;
+  font-size: 40rpx;
+  line-height: 56rpx;
+}

@@ -1,0 +1,8 @@
+<view class='date-item' wx:for="{{weekWeather}}" wx:key="index">
+  <view class='date-wrapper'>
+    <view class='day'>{{item.day}}</view>
+    <view class='date'>{{item.date}}</view>
+  </view>
+  <view class='temp'>{{item.temp}}</view>
+  <image class='weather-icon' src="{{item.iconPath}}"></image>
+</view>
