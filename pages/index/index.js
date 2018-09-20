@@ -25,11 +25,6 @@ const UNPROMPTED = 0
 const UNAUTHORIZED = 1
 const AUTHORIZED = 2
 
-// 根据状态变量，设置提示的不同文字，获取位置或打开权限
-const UNPROMPTED_TIPS = "点击获取当前位置"
-const UNAUTHORIZED_TIPS = "点击开启位置权限"
-const AUTHORIZED_TIPS = ""
-
 Page({
   data: {
     nowTemp: '',
