@@ -52,8 +52,12 @@ Page({
     wx.getSetting({
       success: res => {
         let auth = res.authSetting["scope.userLocation"]
+        // this.setData({
+        //   locationAuthType: auth ? AUTHORIZED
+        //     : (auth === false) ? UNAUTHORIZED : UNPROMPTED
+        // })
         // 是否授权位置信息
-        if(auth){
+        if (auth) {
           this.getCityAndWeather()
         } else {
           this.getNow() //使用默认城市广州
@@ -153,6 +157,9 @@ Page({
   // 点击位置时的响应函数
   onTapLocation() { 
     this.getCityAndWeather()
+    wx.setBackgroundColor({
+      backgroundColorTop: '#000'
+    })
   },
 
   //调用 微信小程序JavaScript SDK reverseGeocoder 逆地址解析接口
