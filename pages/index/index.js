@@ -139,6 +139,7 @@ Page({
     })
   },
 
+  // 点击进入第二页点击的响应函数，带城市参数
   onTapDayWeather() {
     // wx.navigateTo 路径后可以带参数
     wx.navigateTo({
@@ -149,6 +150,7 @@ Page({
   // 根据 locationAuthType 状态变量不同而进行 获取位置 或进入设置页面
   // 若是 this.data.locationAuthType === UNAUTHORIZED 也就是说被拒绝了，则 wx.openSetting({})调起客户端小程序设置界面;设置界面只会出现小程序已经向用户请求过的权限。否则，调用 wx.getLocation 拿到用户位置信息, 这里有两种情况，一种是未弹窗 或者是 用户已经同意获取位置信息
   // wx.openSetting({}) 即将废弃，改为index.html button 组件
+  // 点击位置时的响应函数
   onTapLocation() { 
     this.getCityAndWeather()
   },
@@ -169,7 +171,6 @@ Page({
           },
           success: res => {
             let city = res.result.address_component.city
-            // console.log(city)
             this.setData({
               city: city
             })
