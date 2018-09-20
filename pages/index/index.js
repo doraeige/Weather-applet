@@ -44,12 +44,6 @@ Page({
     locationAuthType: UNPROMPTED
   },
 
-  onPullDownRefresh() {
-    this.getNow(() => {
-      wx.stopPullDownRefresh()
-    })
-  },
-
   // 小程序刚刚启动时，会调用启动页面的 onLoad() 函数
   // 实例化API核心类
   onLoad() {
@@ -58,22 +52,26 @@ Page({
     })
 
     this.getNow()
-  },
 
-  // 在页面出现时，判断当前的权限设置，从而作出对应的赋值
-  onShow() {
+    // 在回调函数的参数中可以看到用户是否已经打开或关闭某个权限
+    // 使用 wx.getSetting 的回调函数获取设置信息
     wx.getSetting({
       success: res => {
-        let auth = res.authSetting['scope.userLocation']
-        // 只有在 权限从无到有 的情况下，才会调用网络
-        if (auth && this.data.locationAuthType !== AUTHORIZED) {
-          this.setData({
-            locationAuthType: AUTHORIZED,
-            locationTipsText: AUTHORIZED_TIPS
-          })
-          this.getLocation()
+        // console.log(res)
+        let auth = res.authSetting["scope.userLocation"]
+        if(auth){
+          this.getCityAndWeather()
         }
       }
+    })
+
+    
+  },
+
+  // 页面下拉刷新
+  onPullDownRefresh() {
+    this.getNow(() => {
+      wx.stopPullDownRefresh()
     })
   },
 
@@ -151,20 +149,15 @@ Page({
     })
   },
 
-  onTapLocation() {
-    // 根据 locationAuthType 状态变量不同而进行 获取位置 或进入设置页面
-    // 若是 this.data.locationAuthType === UNAUTHORIZED 也就是说被拒绝了，则调起客户端小程序设置界面;设置界面只会出现小程序已经向用户请求过的权限。否则，调用 wx.getLocation 拿到用户位置信息, 这里有两种情况，一种是未弹窗 或者是 用户已经同意获取位置信息 
-    if (this.data.locationAuthType === UNAUTHORIZED) {
-      // wx.openSetting({}) 即将废弃，改为 button组件 bindopensetting
-      wx.openSetting({})
-    } else {
-      this.getLocation()
-    }
-    // this.getLocation()
+  // 根据 locationAuthType 状态变量不同而进行 获取位置 或进入设置页面
+  // 若是 this.data.locationAuthType === UNAUTHORIZED 也就是说被拒绝了，则 wx.openSetting({})调起客户端小程序设置界面;设置界面只会出现小程序已经向用户请求过的权限。否则，调用 wx.getLocation 拿到用户位置信息, 这里有两种情况，一种是未弹窗 或者是 用户已经同意获取位置信息
+  // wx.openSetting({}) 即将废弃，改为index.html button 组件
+  onTapLocation() { 
+    this.getCityAndWeather()
   },
 
   //调用 微信小程序JavaScript SDK reverseGeocoder 逆地址解析接口
-  getLocation() {
+  getCityAndWeather() {
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
@@ -178,12 +171,11 @@ Page({
             latitude: res.latitude,
             longitude: res.longitude
           },
-          success: (res) => {
+          success: res => {
             let city = res.result.address_component.city
             // console.log(city)
             this.setData({
               city: city
-              // locationTipsText: AUTHORIZED_TIPS
             })
             // 网络数据返回之后 调用this.getNow() 重新使用新的数据
             this.getNow()
